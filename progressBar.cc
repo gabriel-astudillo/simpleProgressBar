@@ -28,5 +28,5 @@ int main(){
 	}
 	std::cout << std::endl;
   
-  return(EXIT_SUCCESS);
+	return(EXIT_SUCCESS);
 }
