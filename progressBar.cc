@@ -1,27 +1,32 @@
+
+//Header obligatarios
 #include <string>
 #include <cstdlib>
+#include <iostream>
 
-//Este código está escrito "al voleo"
-//no está probado...
+//Header para el ejemplo
+#include <chrono>
+#include <thread>
+
 
 void printProgress (double percentage){
 	
-	int PBWIDTH       = 60;
-	std::string PBSTR = std::string(PBWIDTH, '*');
+	int PBWIDTH = 50;
 	
-
-	int val  = (int) (percentage * 100);
-	int lpad = (int) (percentage * PBWIDTH);
-	int rpad = PBWIDTH - lpad;
-	printf ("\r%3d%% [%.*s%*s]", val, lpad, PBSTR.c_str(), rpad, "");
-	fflush (stdout);
+	std::cerr<<"\r\033[2K" << "[" 
+        << std::string(PBWIDTH * percentage, '*')<<std::string( PBWIDTH * (1.0-percentage) , '_')
+        <<"]" << (int)(percentage*100)  << "%" << std::flush;
+		
 }
 
 
 int main(){
-  for(uint32_t i = 0; i  < max_iter; i++){
-    printProgress((float)i / float(max_iter -1 ) );
-  }
+	uint32_t max_iter = 1000;
+	for(uint32_t i = 0; i  < max_iter; i++){
+		printProgress((float)i / float(max_iter -1 ) );
+		std::this_thread::sleep_for(std::chrono::milliseconds(5));	//C++11
+	}
+	std::cout << std::endl;
   
   return(EXIT_SUCCESS);
 }
